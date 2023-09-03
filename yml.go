@@ -2,11 +2,11 @@
 package goyml
 
 import (
+	"encoding/xml"
 	"errors"
 	"fmt"
 	"log"
 	"strconv"
-	"strings"
 	"time"
 	"unicode/utf8"
 )
@@ -101,7 +101,7 @@ type DeliveryOptions struct {
 	Options []DeliveryOption `xml:"option"`
 }
 
-//// cost 0 - free of charge delivery
+// // cost 0 - free of charge delivery
 func (do *DeliveryOptions) add(cost int, daysFrom, daysTo int, orderBefore int) {
 	daysStr := ""
 	if daysFrom > 255 {
@@ -170,7 +170,7 @@ type Offer struct {
 	Vendor               string           `xml:"vendor,omitempty"`
 	VendorCode           string           `xml:"vendorCode,omitempty"`
 	Model                string           `xml:"model,omitempty"`
-	Description          string           `xml:"description,omitempty"`
+	Description          OfferDescription `xml:"description,omitempty"`
 	SalesNotes           string           `xml:"sales_notes,omitempty"`
 	ManufacturerWarranty bool             `xml:"manufacturer_warranty,omitempty"`
 	CountryOfOrigin      string           `xml:"country_of_origin,omitempty"`
@@ -184,6 +184,11 @@ type Offer struct {
 	Weight               float64          `xml:"weight,omitempty"`
 	Dimensions           string           `xml:"dimensions,omitempty"`
 	Params               []Param          `xml:"param,omitempty"`
+}
+
+type OfferDescription struct {
+	XMLName xml.Name `xml:"description"`
+	Text    string   `xml:",cdata"`
 }
 
 func (o *Offer) AddPicture(pic string) {
@@ -243,11 +248,11 @@ func (o Offer) Validate() error {
 		}
 	}
 
-	descrTrim := strings.Replace(o.Description, ",", "", -1)
-	descrTrim = strings.Replace(descrTrim, ".", "", -1)
-	if utf8.RuneCountInString(descrTrim) > 175 {
-		return errors.New("Description more than 175 cahrs")
-	}
+	//descrTrim := strings.Replace(o.Description, ",", "", -1)
+	//descrTrim = strings.Replace(descrTrim, ".", "", -1)
+	//if utf8.RuneCountInString(descrTrim) > 175 {
+	//	return errors.New("Description more than 175 cahrs")
+	//}
 
 	if utf8.RuneCountInString(o.SalesNotes) > 50 {
 		log.Println(o.SalesNotes)
