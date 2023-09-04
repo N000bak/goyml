@@ -155,8 +155,8 @@ type Offer struct {
 	Type                 OfferType        `xml:"type,attr,omitempty"`
 	Available            bool             `xml:"available,attr"`
 	Url                  string           `xml:"url,omitempty"`
-	Price                float64          `xml:"price"`
-	OldPrice             float64          `xml:"oldprice,omitempty"`
+	Price                string           `xml:"price"`
+	OldPrice             string           `xml:"oldprice,omitempty"`
 	CurrencyId           string           `xml:"currencyId"`
 	CategoryId           int              `xml:"categoryId"`
 	MarketCategory       string           `xml:"market_category,omitempty"`
@@ -230,10 +230,20 @@ func (o Offer) Validate() error {
 	if o.Type == TypeVendorModel && (o.Vendor == "" || o.Model == "") {
 		return errors.New("Vendor or Model is empty")
 	}
-	if o.Price == 0 {
+
+	price, err := strconv.ParseFloat(o.Price, 64)
+	if err != nil {
+		return fmt.Errorf("price not float: %s", err)
+	}
+	if price == 0 {
 		return errors.New("Price is zero")
 	}
-	if o.OldPrice > 0 && o.OldPrice <= o.Price {
+
+	oldPrice, err := strconv.ParseFloat(o.OldPrice, 64)
+	if err != nil {
+		return fmt.Errorf("old price not float: %s", err)
+	}
+	if oldPrice > 0 && oldPrice <= price {
 		return errors.New("OldPrice less than Price")
 	}
 	if utf8.RuneCountInString(o.CurrencyId) != 3 {
