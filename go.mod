@@ -1,3 +1,3 @@
-module github.com/alehano/goyml
+module github.com/N000bak/goyml
 
 go 1.20
