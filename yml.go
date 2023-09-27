@@ -184,6 +184,7 @@ type Offer struct {
 	Weight               float64          `xml:"weight,omitempty"`
 	Dimensions           string           `xml:"dimensions,omitempty"`
 	Params               []Param          `xml:"param,omitempty"`
+	Disabled	     bool	      `xml:"disabled,omitempty"`
 }
 
 type OfferDescription struct {
@@ -257,12 +258,6 @@ func (o Offer) Validate() error {
 			return errors.New("Picture more than 512 cahrs")
 		}
 	}
-
-	//descrTrim := strings.Replace(o.Description, ",", "", -1)
-	//descrTrim = strings.Replace(descrTrim, ".", "", -1)
-	//if utf8.RuneCountInString(descrTrim) > 175 {
-	//	return errors.New("Description more than 175 cahrs")
-	//}
 
 	if utf8.RuneCountInString(o.SalesNotes) > 50 {
 		log.Println(o.SalesNotes)
