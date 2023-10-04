@@ -102,33 +102,13 @@ type DeliveryOptions struct {
 }
 
 // // cost 0 - free of charge delivery
-func (do *DeliveryOptions) add(cost int, daysFrom, daysTo int, orderBefore int) {
-	daysStr := ""
-	if daysFrom > 255 {
-		daysFrom = 255
-	}
-	if daysTo > 255 {
-		daysTo = 255
-	}
-	if daysTo < daysFrom {
-		daysTo = daysFrom
-	}
-	if daysFrom == daysTo || daysTo == 0 {
-		daysStr = strconv.Itoa(daysFrom)
-	} else {
-		daysStr = fmt.Sprintf("%d-%d", daysFrom, daysTo)
-	}
-	option := DeliveryOption{
-		Cost:        cost,
-		Days:        daysStr,
-		OrderBefore: orderBefore,
-	}
-	do.Options = append(do.Options, option)
+func (do *DeliveryOptions) add(params DeliveryOption) {
+	do.Options = append(do.Options, params)
 }
 
 type DeliveryOption struct {
 	Cost        int    `xml:"cost,attr"`
-	Days        string `xml:"days,attr"`
+	Days        string `xml:"days,attr,omitempty"`
 	OrderBefore int    `xml:"order-before,attr,omitempty"`
 }
 
@@ -184,7 +164,7 @@ type Offer struct {
 	Weight               float64          `xml:"weight,omitempty"`
 	Dimensions           string           `xml:"dimensions,omitempty"`
 	Params               []Param          `xml:"param,omitempty"`
-	Disabled	     bool	      `xml:"disabled,omitempty"`
+	Disabled             bool             `xml:"disabled,omitempty"`
 }
 
 type OfferDescription struct {
