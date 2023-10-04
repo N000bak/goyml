@@ -176,11 +176,11 @@ func (o *Offer) AddPicture(pic string) {
 	o.Picture = append(o.Picture, pic)
 }
 
-func (o *Offer) AddDeliveryOption(cost int, daysFrom, daysTo int, orderBefore int) {
+func (o *Offer) AddDeliveryOption(params DeliveryOption) {
 	if o.DeliveryOptions == nil {
 		o.DeliveryOptions = &DeliveryOptions{}
 	}
-	o.DeliveryOptions.add(cost, daysFrom, daysTo, orderBefore)
+	o.DeliveryOptions.add(params)
 }
 
 func (o *Offer) AddBarcode(barcode string) {
