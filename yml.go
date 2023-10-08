@@ -42,11 +42,11 @@ func (c *Catalog) AddCategory(id, parentId int, name string) {
 	c.Shop.Categories.add(id, parentId, name)
 }
 
-func (c *Catalog) AddDeliveryOption(cost int, daysFrom, daysTo int, orderBefore int) {
+func (c *Catalog) AddDeliveryOption(params DeliveryOptions) {
 	if c.Shop.DeliveryOptions == nil {
 		c.Shop.DeliveryOptions = &DeliveryOptions{}
 	}
-	c.Shop.DeliveryOptions.add(cost, daysFrom, daysTo, orderBefore)
+	c.Shop.DeliveryOptions.add(params)
 }
 
 func (c *Catalog) AddOffer(offer Offer) {
