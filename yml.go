@@ -42,7 +42,7 @@ func (c *Catalog) AddCategory(id, parentId int, name string) {
 	c.Shop.Categories.add(id, parentId, name)
 }
 
-func (c *Catalog) AddDeliveryOption(params DeliveryOptions) {
+func (c *Catalog) AddDeliveryOption(params DeliveryOption) {
 	if c.Shop.DeliveryOptions == nil {
 		c.Shop.DeliveryOptions = &DeliveryOptions{}
 	}
