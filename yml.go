@@ -218,14 +218,16 @@ func (o Offer) Validate() error {
 	}
 	if price == 0 {
 		return errors.New("Price is zero")
-	}
+	}	
 
-	oldPrice, err := strconv.ParseInt(o.OldPrice, 10, 0)
-	if err != nil {
-		return fmt.Errorf("old price not int: %s", err)
-	}
-	if oldPrice > 0 && oldPrice <= price {
-		return errors.New("OldPrice less than Price")
+	if o.OldPrice != "" {
+		oldPrice, err := strconv.ParseInt(o.OldPrice, 10, 0)
+		if err != nil {
+			return fmt.Errorf("old price not int: %s", err)
+		}
+		if oldPrice > 0 && oldPrice <= price {
+			return errors.New("OldPrice less than Price")
+		}
 	}
 	if utf8.RuneCountInString(o.CurrencyId) != 3 {
 		return errors.New("CurrencyId less than 3 chars")
