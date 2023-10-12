@@ -212,17 +212,17 @@ func (o Offer) Validate() error {
 		return errors.New("Vendor or Model is empty")
 	}
 
-	price, err := strconv.ParseFloat(o.Price, 64)
+	price, err := strconv.ParseInt(o.Price, 10, 0)
 	if err != nil {
-		return fmt.Errorf("price not float: %s", err)
+		return fmt.Errorf("price not int: %s", err)
 	}
 	if price == 0 {
 		return errors.New("Price is zero")
 	}
 
-	oldPrice, err := strconv.ParseFloat(o.OldPrice, 64)
+	oldPrice, err := strconv.ParseInt(o.OldPrice, 10, 0)
 	if err != nil {
-		return fmt.Errorf("old price not float: %s", err)
+		return fmt.Errorf("old price not int: %s", err)
 	}
 	if oldPrice > 0 && oldPrice <= price {
 		return errors.New("OldPrice less than Price")
